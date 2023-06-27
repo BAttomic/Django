@@ -1,6 +1,6 @@
-# Djngo
-Making a ERP-System to study reasons
+# Django
+Criando um sistema ERP para estudos e portfólio
 
-python manage.py runserver
-python manage.py createsuperuser
-bernardo é gay
+Necessário criar uma `.venv`;
+`py manage.py createsuperuser` Cria um OP User
+`py manage.py runserver` Starta o server
