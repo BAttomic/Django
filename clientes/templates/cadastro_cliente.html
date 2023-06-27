@@ -36,33 +36,33 @@
       <div id="campos-pessoa-fisica" style="display: none;">
         <div class="form-field">
           <label for="nome">Nome:</label>
-          <input type="text" id="nome" name="nome" pattern="[A-Za-zÀ-ú/s]+" oninput="formatarLETRAS(this)">
+          <input type="text" id="nome" name="nome" pattern="[A-Za-zÀ-ú\s]+" oninput="formatarLETRAS(this)">
         </div>
         <div class="form-field">
           <label for="apelido">Apelido:</label>
-          <input type="text" id="apelido" name="apelido" pattern="[A-Za-zÀ-ú/s]+">
+          <input type="text" id="apelido" name="apelido" pattern="[A-Za-zÀ-ú\s]+">
         </div>
         <div class="form-field">
           <label for="cpf">CPF:</label>
-          <input type="text" id="cpf" name="cpf" pattern="/d{3}/./d{3}/./d{3}-/d{2}" maxlength="14" oninput="formatarCPF(this)">
+          <input type="text" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" maxlength="14" oninput="formatarCPF(this)">
         </div>
         <div class="form-field">
           <label for="rg">RG:</label>
-          <input type="text" id="rg" name="rg" pattern="/d{7,10}" maxlength="10" oninput="formatarNUMEROS(this)">
+          <input type="text" id="rg" name="rg" pattern="\d{7,10}" maxlength="10" oninput="formatarNUMEROS(this)">
         </div>
       </div>
       <div id="campos-pessoa-juridica" style="display: none;">
         <div class="form-field">
           <label for="razaosocial">Razão Social:</label>
-          <input type="text" id="razaosocial" name="razaosocial" pattern="[a-zA-ZÀ-ÿ0-9/s]+">
+          <input type="text" id="razaosocial" name="razaosocial" pattern="[a-zA-ZÀ-ÿ0-9\s]+">
         </div>
         <div class="form-field">
           <label for="nomefantasia">Nome Fantasia:</label>
-          <input type="text" id="nomefantasia" name="nomefantasia" pattern="[a-zA-ZÀ-ÿ0-9/s]+">
+          <input type="text" id="nomefantasia" name="nomefantasia" pattern="[a-zA-ZÀ-ÿ0-9\s]+">
         </div>
         <div class="form-field">
           <label for="cnpj">CNPJ:</label>
-          <input type="text" id="cnpj" name="cnpj" pattern="/d{2}/./d{3}/./d{3}///d{4}/-/d{2}" maxlength="18" oninput="formatarCNPJ(this)">
+          <input type="text" id="cnpj" name="cnpj" pattern="\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}" maxlength="18" oninput="formatarCNPJ(this)">
         </div>
         <div class="form-field">
           <label for="ie">IE:</label>
@@ -72,20 +72,20 @@
       <h3>Contato</h3>
       <div class="form-field">
         <label for="telefone1">Telefone 1:</label>
-        <input type="text" id="telefone1" name="telefone1" pattern="/([0-9]{2}/) [0-9]{5}-[0-9]{4}" oninput="formatarTELEFONE(this)" maxlength="15">
+        <input type="text" id="telefone1" name="telefone1" pattern="\(\d{2}\) \d{5}-\d{4}" oninput="formatarTELEFONE(this)" maxlength="15">
       </div>
       <div class="form-field">
         <label for="telefone2">Telefone 2:</label>
-        <input type="text" id="telefone2" name="telefone2" pattern="/([0-9]{2}/) [0-9]{5}-[0-9]{4}" oninput="formatarTELEFONE(this)" maxlength="15">
+        <input type="text" id="telefone2" name="telefone2" pattern="\(\d{2}\) \d{5}-\d{4}" oninput="formatarTELEFONE(this)" maxlength="15">
       </div>
       <div class="form-field">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+/.[a-zA-Z]{2,4}">
+        <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
       </div>
       <h3>Endereço</h3>
       <div class="form-field">
         <label for="cep">CEP:</label>
-        <input type="text" id="cep" name="cep" pattern="/d{5}-/d{3}" maxlength="9" oninput="formatarCEP(this)">
+        <input type="text" id="cep" name="cep" pattern="\d{5}-\d{3}" maxlength="9" oninput="formatarCEP(this)">
       </div>
       <div class="form-field">
         <label for="uf">UF:</label>
@@ -122,7 +122,7 @@
       </div>
       <div class="form-field">
         <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade" name="cidade" pattern="[A-Za-zÀ-ú/s]+" oninput="formatarLETRAS(this)">
+        <input type="text" id="cidade" name="cidade" pattern="[A-Za-zÀ-ú\s]+" oninput="formatarLETRAS(this)">
       </div>
       <div class="form-field">
         <label for="bairro">Bairro:</label>
@@ -134,7 +134,7 @@
       </div>
       <div class="form-field">
         <label for="numero">Número:</label>
-        <input type="text" id="numero" name="numero" pattern="/d{1,5}" maxlength="5" oninput="formatarNUMEROS(this)">
+        <input type="text" id="numero" name="numero" pattern="\d{1,5}" maxlength="5" oninput="formatarNUMEROS(this)">
       </div>
       <div class="form-field">
         <label for="complemento">Complemento:</label>

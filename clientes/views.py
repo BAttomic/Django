@@ -24,6 +24,7 @@ def cliente_especifico(request, ID):
 
         return render(request, './cliente_especifico.html', {  
             'ID': ID+1,                                                 'ESTADO_CONTA': ClienteData[ID].ESTADO_CONTA,
+            'TIPO': ClienteData[ID].TIPO,
             'NOME_RAZAO':ClienteData[ID].NOME_RAZAO,                    'APELIDO_FANTASIA': ClienteData[ID].APELIDO_FANTASIA,
             'CPF_CNPJ': ClienteData[ID].CPF_CNPJ,                       'RG_IE': ClienteData[ID].RG_IE,
             'TELEFONE1': ClienteData[ID].TELEFONE1,                     'TELEFONE2': ClienteData[ID].TELEFONE2,
@@ -46,12 +47,14 @@ def cadastro_cliente(request):
     elif request.method == "POST":
 
         if request.POST.get('tipo-pessoa') == "pessoa-fisica":
+            TIPO = "PF"
             NOME_RAZAO = request.POST.get('nome')
             APELIDO_FANTASIA = request.POST.get('apelido')
             CPF_CNPJ = request.POST.get('cpf')
             RG_IE = request.POST.get('rg')
 
         elif request.POST.get('tipo-pessoa') == "pessoa-juridica":
+            TIPO = "PJ"
             NOME_RAZAO = request.POST.get('razaosocial')
             APELIDO_FANTASIA = request.POST.get('nomefantasia')
             CPF_CNPJ = request.POST.get('cnpj')
@@ -74,6 +77,6 @@ def cadastro_cliente(request):
             return HttpResponse("Erro! Cliente já cadastrado")
         
         else:
-            ClienteData=Cliente(NOME_RAZAO=NOME_RAZAO, APELIDO_FANTASIA=APELIDO_FANTASIA, CPF_CNPJ=CPF_CNPJ, RG_IE=RG_IE, TELEFONE1=TELEFONE1, TELEFONE2=TELEFONE2, EMAIL=EMAIL, UF=UF, CIDADE=CIDADE, BAIRRO=BAIRRO, RUA= RUA, NUMERO=NUMERO, COMPLEMENTO=COMPLEMENTO, CEP=CEP, OUTRAS_INFORMACOES=OUTRAS_INFORMACOES)
+            ClienteData=Cliente(TIPO=TIPO, NOME_RAZAO=NOME_RAZAO, APELIDO_FANTASIA=APELIDO_FANTASIA, CPF_CNPJ=CPF_CNPJ, RG_IE=RG_IE, TELEFONE1=TELEFONE1, TELEFONE2=TELEFONE2, EMAIL=EMAIL, UF=UF, CIDADE=CIDADE, BAIRRO=BAIRRO, RUA= RUA, NUMERO=NUMERO, COMPLEMENTO=COMPLEMENTO, CEP=CEP, OUTRAS_INFORMACOES=OUTRAS_INFORMACOES)
             ClienteData.save()
             return render(request, 'home.html')
