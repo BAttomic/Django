@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Página de Clientes</title>
+  <!-- Link CSS -->
+  <link rel="stylesheet" href="/static/clientes/css/lista_clientes.css">
+  <!-- Link JS-->
+  <script src="/static/clientes/js/lista_clientes.js"></script>
+
+</head>
+
+<body>
+
+  <form id="cliente-form" action="{% url 'lista_clientes' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" id="cliente-id" name="cliente_id">
+  </form>
+
+  <div class="container">
+    <h4>Início &gt; Clientes</h4>
+    <h2>Página de Clientes</h2>
+    
+    <div>
+      <button class="button" onclick="PagAnterior()">Voltar</button>
+    </div>
+
+    <div>
+      <input class="search-box" type="text" id="search-input" placeholder="Pesquisar cliente..." onkeyup="searchCliente()">
+      <select class="filter-box" id="filter-select" onchange="filterCliente()">
+        <option value="todos">Todos</option>
+        <option value="ativo">Ativo</option>
+        <option value="inativo">Inativo</option>
+      </select>
+    </div>
+
+    <div class="treeview-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Estado da Conta</th>
+            <th>Nome Completo</th>
+            <th>Apelido</th>
+            <th>Telefone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr class="treeview-item" data-tipo="{{ row.tipo }}" onclick="highlightRow(event)" ondblclick="openClientePage(event)">
+            <td>{{ row.id }}</td>
+            <td>{{ row.ESTADO_CONTA }}</td>
+            <td>{{ row.NOME_RAZAO }}</td>
+            <td>{{ row.APELIDO_FANTASIA }}</td>
+            <td>{{ row.TELEFONE1 }}</td>
+            <td>{{ row.EMAIL }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <a class="button" href="">Clientes em atraso</a>
+      <a class="button" href="/clientes/cadastro_cliente">Cadastrar novo cliente</a>
+    </div>
+  </div>
+</body>
+</html>
