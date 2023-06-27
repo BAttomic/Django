@@ -6,7 +6,7 @@ def lista_clientes(request):
     
     if request.method == "GET":
         data = Cliente.objects.all()
-        return render(request, 'lista_clientes.html', {'data': data})
+        return render(request, './lista_clientes.html', {'data': data})
     
     elif request.method == "POST":
         cliente_id = request.POST.get('cliente_id')
@@ -22,15 +22,16 @@ def cliente_especifico(request, ID):
         ID=int(ID)
         ID=ID-1
 
-        return render(request, 'cliente_especifico.html', { 'ID': ID+1,                                                 'ESTADO_CONTA': ClienteData[ID].ESTADO_CONTA,
-                                                            'NOME_RAZAO':ClienteData[ID].NOME_RAZAO,                    'APELIDO_FANTASIA': ClienteData[ID].APELIDO_FANTASIA,
-                                                            'CPF_CNPJ': ClienteData[ID].CPF_CNPJ,                       'RG_IE': ClienteData[ID].RG_IE,
-                                                            'TELEFONE1': ClienteData[ID].TELEFONE1,                     'TELEFONE2': ClienteData[ID].TELEFONE2,
-                                                            'EMAIL': ClienteData[ID].EMAIL,                             'UF': ClienteData[ID].UF,
-                                                            'CIDADE': ClienteData[ID].CIDADE,                           'BAIRRO': ClienteData[ID].BAIRRO,
-                                                            'RUA': ClienteData[ID].RUA,                                 'NUMERO': ClienteData[ID].NUMERO,
-                                                            'COMPLEMENTO': ClienteData[ID].COMPLEMENTO,                 'CEP': ClienteData[ID].CEP,
-                                                            'OUTRAS_INFORMACOES': ClienteData[ID].OUTRAS_INFORMACOES,   'DATA_REGISTRO': ClienteData[ID].DATA_REGISTRO})
+        return render(request, './cliente_especifico.html', {  
+            'ID': ID+1,                                                 'ESTADO_CONTA': ClienteData[ID].ESTADO_CONTA,
+            'NOME_RAZAO':ClienteData[ID].NOME_RAZAO,                    'APELIDO_FANTASIA': ClienteData[ID].APELIDO_FANTASIA,
+            'CPF_CNPJ': ClienteData[ID].CPF_CNPJ,                       'RG_IE': ClienteData[ID].RG_IE,
+            'TELEFONE1': ClienteData[ID].TELEFONE1,                     'TELEFONE2': ClienteData[ID].TELEFONE2,
+            'EMAIL': ClienteData[ID].EMAIL,                             'UF': ClienteData[ID].UF,
+            'CIDADE': ClienteData[ID].CIDADE,                           'BAIRRO': ClienteData[ID].BAIRRO,
+            'RUA': ClienteData[ID].RUA,                                 'NUMERO': ClienteData[ID].NUMERO,
+            'COMPLEMENTO': ClienteData[ID].COMPLEMENTO,                 'CEP': ClienteData[ID].CEP,
+            'OUTRAS_INFORMACOES': ClienteData[ID].OUTRAS_INFORMACOES,   'DATA_REGISTRO': ClienteData[ID].DATA_REGISTRO})
     
     else:
         return HttpResponse("Erro! Método de requisição inválido")
@@ -40,7 +41,7 @@ def cliente_especifico(request, ID):
 def cadastro_cliente(request):
 
     if request.method == "GET":
-        return render(request, 'cadastro_cliente.html')
+        return render(request, './cadastro_cliente.html')
     
     elif request.method == "POST":
 
