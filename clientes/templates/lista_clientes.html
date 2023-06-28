@@ -5,17 +5,16 @@
 
   <meta charset="UTF-8">
   <title>Página de Clientes</title>
-  <!-- Link CSS -->
+  <!-- Link CSS e JS-->
   <link rel="stylesheet" href="/static/clientes/css/lista_clientes.css">
-  <!-- Link JS-->
   <script src="/static/clientes/js/lista_clientes.js"></script>
 
 </head>
 
 <body>
 
-  <form id="cliente-form" action="{% url 'lista_clientes' %}" method="POST">
-    {% csrf_token %}
+  <!-- Formulário para enviar o ID do cliente selecionado -->
+  <form id="cliente-form" action="{% url 'lista_clientes' %}" method="POST">{% csrf_token %}
     <input type="hidden" id="cliente-id" name="cliente_id">
   </form>
 
@@ -24,12 +23,13 @@
     <h2>Página de Clientes</h2>
     
     <div>
-      <button class="button" onclick="PagAnterior()">Voltar</button>
+      <button class="button" onclick="PaginaAnterior()">Voltar</button>
     </div>
 
-    <div>
-      <input class="search-box" type="text" id="search-input" placeholder="Pesquisar cliente..." onkeyup="searchCliente()">
-      <select class="filter-box" id="filter-select" onchange="filterCliente()">
+    <div> <!-- Barra de pesquisa e filtro -->
+      <input class="search-box" type="text" id="search-input" placeholder="Pesquisar cliente..." onkeyup="PesquisarCliente()">
+
+      <select class="filter-box" id="filter-select" onchange="FiltrarClientes()">
         <option value="todos">Todos</option>
         <option value="ativo">Ativo</option>
         <option value="inativo">Inativo</option>
@@ -38,7 +38,7 @@
 
     <div class="treeview-container">
       <table>
-        <thead>
+        <thead> <!-- Cabeçalho da tabela -->
           <tr>
             <th>ID</th>
             <th>Estado da Conta</th>
@@ -49,9 +49,10 @@
             <th>Email</th>
           </tr>
         </thead>
-        <tbody>
+
+        <tbody> <!-- Dados da tabela -->
           {% for row in data %}
-          <tr class="treeview-item" data-tipo="{{ row.tipo }}" onclick="highlightRow(event)" ondblclick="openClientePage(event)">
+          <tr class="treeview-item" data-tipo="{{ row.tipo }}" onclick="highlightRow(event)" ondblclick="AbrirPaginaCliente(event)">
             <td>{{ row.id }}</td>
             <td>{{ row.TIPO }}</td>
             <td>{{ row.ESTADO_CONTA }}</td>
@@ -71,4 +72,5 @@
     </div>
   </div>
 </body>
+
 </html>

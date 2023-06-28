@@ -5,38 +5,33 @@
 
   <meta charset="UTF-8">
   <title>Dados do Cliente</title>
-  <!-- Link CSS -->
+  <!-- Link CSS e JS-->
   <link rel="stylesheet" href="/static/clientes/css/cadastro_cliente.css">
-  <!-- Link JS-->
   <script src="/static/clientes/js/cadastro_cliente.js"></script>
 
-  <script>
-    // Função para voltar à página anterior
-    function PagAnterior() {
-        window.history.back();
-      }
-      
-      // Função para detectar se o valor é CPF ou CNPJ
+  <script> //Essas funções deveriam estar dentro do .js porém elas não funcionam adequadamente lá, então deixei aqui mesmo
+
+    // Função para detectar se o valor é CPF ou CNPJ
     function detectarCPFouCNPJ(valor) {
-      var cpfRegex = /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/;
-      var cnpjRegex = /^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$/;
+      var CPF_Regex = /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/;
+      var CNPJ_Regex = /^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$/;
     
-      if (cpfRegex.test(valor)) {
+      if (CPF_Regex.test(valor)) {
         return "CPF";
-      } else if (cnpjRegex.test(valor)) {
+      } else if (CNPJ_Regex.test(valor)) {
         return "CNPJ";
       } else {
         return "N/A";
       }
     }
-      
-      // Função para carregar os dados do cliente
+    
+    // Função para carregar os dados do cliente
     function carregarDadosCliente() {
-      var cpfCnpjElement = document.getElementById("cpf");
-      var cpfCnpj = cpfCnpjElement.innerText;
+      var CPF_CNPJ_Element = document.getElementById("cpf");
+      var CPF_CNPJ = CPF_CNPJ_Element.innerText;
       var tipoElement = document.getElementById("tipo");
     
-      var tipo = detectarCPFouCNPJ(cpfCnpj);
+      var tipo = detectarCPFouCNPJ(CPF_CNPJ);
     
       if (tipo === "CPF") {
         document.getElementById("campos-pessoa-fisica").style.display = "block";
@@ -51,8 +46,9 @@
     window.onload = function () {
       carregarDadosCliente();
     };
-  
-    </script>
+
+  </script>
+
 </head>
 
 <body>
@@ -62,7 +58,7 @@
     <h2>Dados do Cliente</h2>
     
     <div>
-      <button class="button" onclick="PagAnterior()">Voltar</button>
+      <button class="button" onclick="PaginaAnterior()">Voltar</button>
     </div>
     
     <h3>Dados da Conta</h3>
@@ -71,8 +67,10 @@
       <p><strong>Estado da Conta:</strong> <span id="estado">{{ESTADO_CONTA}}</span></p>
       <p><strong>Data de Registro:</strong> <span id="outras-informacoes">{{DATA_REGISTRO}}</span></p>
     </div>
+
     <br>
-    <h3>Dados Pessoais</h3>
+
+    <h3>Identificação</h3>
     <div id="campos-pessoa-fisica" style="display: none;">
       <div class="data-section">
         <span id="tipo"></span></p>
@@ -90,24 +88,31 @@
         <p><strong>IE:</strong> <span id="ie-juridica">{{RG_IE}}</span></p>
       </div>
     </div>
+
     <br>
+
     <h3>Contato</h3>
     <div class="data-section">
       <p><strong>Telefone 1:</strong> <span id="telefone1">{{TELEFONE1}}</span></p>
       <p><strong>Telefone 2:</strong> <span id="telefone2">{{TELEFONE2}}</span></p>
       <p><strong>Email:</strong> <span id="email">{{EMAIL}}</span></p>
     </div>
+
     <br>
+
     <h3>Endereço</h3>
     <div class="data-section">
       <p><strong>Local:</strong> <span id="completo">{{RUA}}, {{NUMERO}} - {{BAIRRO}}, {{CIDADE}} - {{UF}}, {{CEP}}</span></p>
       <p><strong>Complemento:</strong> <span id="complemento">{{COMPLEMENTO}}</span></p>
     </div>
+
     <br>
+
     <h3>Outras Informações</h3>
     <div class="data-section">
       <p><strong>Observações:</strong> <span id="outras-informacoes">{{OUTRAS_INFORMACOES}}</span></p>
     </div>
+
     <div>
       <button class="button" onclick="bloquearCliente()">Bloquear Cliente</button>
       <button class="button" onclick="editarCliente()">Editar Cliente</button>
@@ -115,6 +120,5 @@
     </div>
   </div>
 </body>
-
 
 </html>

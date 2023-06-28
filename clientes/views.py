@@ -24,7 +24,6 @@ def cliente_especifico(request, ID):
 
         return render(request, './cliente_especifico.html', {  
             'ID': ID+1,                                                 'ESTADO_CONTA': ClienteData[ID].ESTADO_CONTA,
-            'TIPO': ClienteData[ID].TIPO,
             'NOME_RAZAO':ClienteData[ID].NOME_RAZAO,                    'APELIDO_FANTASIA': ClienteData[ID].APELIDO_FANTASIA,
             'CPF_CNPJ': ClienteData[ID].CPF_CNPJ,                       'RG_IE': ClienteData[ID].RG_IE,
             'TELEFONE1': ClienteData[ID].TELEFONE1,                     'TELEFONE2': ClienteData[ID].TELEFONE2,

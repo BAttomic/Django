@@ -1,10 +1,9 @@
-// Função para voltar à página anterior
-function PagAnterior() {
+function PaginaAnterior() {
   window.history.back();
 }
 
 // Função para realizar a pesquisa de clientes
-function searchCliente() {
+function PesquisarCliente() {
   var input = document.getElementById("search-input");
   var filter = input.value.toUpperCase();
   var treeviewItems = document.getElementsByClassName("treeview-item");
@@ -22,7 +21,7 @@ function searchCliente() {
 }
 
 // Função para filtrar os clientes por tipo
-function filterCliente() {
+function FiltrarClientes() {
   var filterSelect = document.getElementById("filter-select");
   var filterValue = filterSelect.value;
   var treeviewItems = document.getElementsByClassName("treeview-item");
@@ -46,7 +45,9 @@ function highlightRow(event) {
 }
 
 // Função para abrir a página do cliente ao clicar duas vezes
-function openClientePage(event) {
+function AbrirPaginaCliente(event) { //Bug: A chamada ta lendo o número da ROW não o ID do cliente
+                                     //Isto é, se deletar um cliente, todos clientes abaixo dele
+                                     //terão o ID alterado, e a chamada não vai funcionar
   if (event.target.nodeName === "TD") {
     var selectedRow = event.target.parentNode;
     var clientId = selectedRow.cells[0].innerText;
