@@ -52,7 +52,7 @@
 
         <tbody> <!-- Dados da tabela -->
           {% for row in data %}
-          <tr class="treeview-item" data-tipo="{{ row.tipo }}" data-id="{{ row.id }}" onclick="highlightRow(event)" ondblclick="AbrirPaginaCliente(event)">
+          <tr class="treeview-item" data-tipo="{{ row.tipo }}" onclick="highlightRow(event)" ondblclick="AbrirPaginaCliente(event)">
             <td>{{ row.id }}</td>
             <td>{{ row.TIPO }}</td>
             <td>{{ row.ESTADO_CONTA }}</td>

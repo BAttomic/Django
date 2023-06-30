@@ -53,6 +53,7 @@ function ValidarCNPJ(cnpj) {
 
     if (cnpj.length !== 14) {
       resolve(false);
+      
     } else {
       var url = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`; // URL para fazer a requisição
 
@@ -63,10 +64,12 @@ function ValidarCNPJ(cnpj) {
           if (data.status === "OK") {
           console.log("CNPJ valido")
             resolve(true);
+
           } else {
           console.log("CNPJ invalido")
             resolve(false);
           }
+          
         })
         .catch(error => {
           console.error('Ocorreu um erro:', error);

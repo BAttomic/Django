@@ -20,8 +20,6 @@ def cliente_especifico(request, ID):
 
         ClienteData = Cliente.objects.all()
         ID=int(ID)
-        print(ID)
-        print("Cliente Data",ClienteData[ID].id)
 
         return render(request, './cliente_especifico.html', {  
             'ID': ClienteData[ID].id,                                   'ESTADO_CONTA': ClienteData[ID].ESTADO_CONTA,
