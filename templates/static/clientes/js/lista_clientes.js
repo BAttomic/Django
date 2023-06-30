@@ -45,9 +45,7 @@ function highlightRow(event) {
 }
 
 // Função para abrir a página do cliente ao clicar duas vezes
-function AbrirPaginaCliente(event) { //Bug: A chamada ta lendo o número da ROW não o ID do cliente
-                                     //Isto é, se deletar um cliente, todos clientes abaixo dele
-                                     //terão o ID alterado, e a chamada não vai funcionar
+function AbrirPaginaCliente(event) {
   if (event.target.nodeName === "TD") {
     var selectedRow = event.target.parentNode;
     var clientId = selectedRow.cells[0].innerText;

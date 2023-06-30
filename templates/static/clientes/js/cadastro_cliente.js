@@ -48,37 +48,32 @@ function FormatarTELEFONE(input) {
 // Função para verificar a existência de um CNPJ
 // Créditos: https://receitaws.com.br/api
 function ValidarCNPJ(cnpj) {
-  cnpj = cnpj.replace(/\D/g, ''); // Remove caracteres não numéricos
+  return new Promise((resolve, reject) => {
+    cnpj = cnpj.replace(/[^\d]+/g, ''); // Remove caracteres especiais
 
-  if (cnpj.length == 14) {
+    if (cnpj.length !== 14) {
+      resolve(false);
+    } else {
+      var url = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`; // URL para fazer a requisição
 
-    var url = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`; // URL para fazer a requisição
-  
-    fetch(url) // Faz a requisição GET
-      .then(response => response.json())
-      .then(data => {
-        // Verifica se o CNPJ é válido
-        if (data.status === "OK") {
-          console.log('CNPJ existe!');
-          console.log('Razão Social: ' + data.nome);
-          console.log('Nome Fantasia: ' + data.fantasia);
-          console.log('Situação: ' + data.situacao);
-          return true;
-
-        } else {
-          console.log('CNPJ inválido, inativado ou não encontrado.');
-          return false;
-        }
-      })
-      .catch(error => {
-        console.error('Ocorreu um erro:', error);
-        return false;
-      });
-
-  } else {
-    console.log('CNPJ inválido!');
-    return false;
-  }
+      fetch(url) // Faz a requisição GET
+        .then(response => response.json())
+        .then(data => {
+          // Verifica se o CNPJ é válido
+          if (data.status === "OK") {
+          console.log("CNPJ valido")
+            resolve(true);
+          } else {
+          console.log("CNPJ invalido")
+            resolve(false);
+          }
+        })
+        .catch(error => {
+          console.error('Ocorreu um erro:', error);
+          resolve(false);
+        });
+    }
+  });
 }
 
 // Função para validar CPF (Não implica que é existente)
@@ -193,100 +188,110 @@ function ValidarFormulario() {
     var rg = document.getElementById('rg');
 
     // Validação do NOME
-    if (!/^[A-Za-zÀ-ú\s]+$/.test(nome.value)) {
+    if (!/^[A-Za-zÀ-ú\s]+$/.test(nome)) {
       nome.classList.add('error');
       valid = false;
-      } else {
+    } else {
       nome.classList.remove('error');
-      }
+    }
     
     // Validação do CPF
     if (!ValidarCPF(cpf)) {
       cpf.classList.add('error');
       valid = false;
-      } else {
+    } else {
       cpf.classList.remove('error');
-      }
+    }
 
     // Validação do RG
-    if (!/^\d{7,10}$/.test(rg.value)) {
+    if (!/^\d{7,10}$/.test(rg)) {
       rg.classList.add('error');
       valid = false;
-      } else {
+    } else {
       rg.classList.remove('error');
-      }
+    }
 
   } else if (tipoPessoa == "pessoa-juridica") {
     var razaosocial = document.getElementById('razaosocial');
     var cnpj = document.getElementById('cnpj');
     var ie = document.getElementById('ie');
 
-  // Validação da razão social
-  if (!/^[a-zA-ZÀ-ÿ0-9\s]+$/.test(razaosocial.value)) {
-    razaosocial.classList.add('error');
-    valid = false;
+    // Validação da RAZÃO SOCIAL
+    if (!/^[A-Za-zÀ-ú\s]+$/.test(razaosocial)) {
+      razaosocial.classList.add('error');
+      valid = false;
     } else {
-    razaosocial.classList.remove('error');
+      razaosocial.classList.remove('error');
     }
 
-  // Validação do CNPJ
-  if (!ValidarCNPJ(cnpj)) {
-    cnpj.classList.add('error');
-    valid = false;
+    // Validação do CNPJ
+    if (ValidarCNPJ(cnpj)) {
+      cnpj.classList.add('error');
+      valid = false;
     } else {
-    cnpj.classList.remove('error');
+      cnpj.classList.remove('error');
     }
 
-  if (!/^\d{{2,14}$/.test(ie.value)) {
-    ie.classList.add('error');
-    valid = false;
+    // Validação da INSCRIÇÃO ESTADUAL
+    if (!/^\d{2,14}$/.test(ie)) {
+      ie.classList.add('error');
+      valid = false;
     } else {
-    ie.classList.remove('error');
+      ie.classList.remove('error');
     }
   }
 
   // Validação do telefone 1
   var telefone1 = document.getElementById('telefone1');
-  if (!/\(\d{2}\) \d{5}-\d{4}/.test(telefone1.value)) {
+  if (!/\(\d{2}\) \d{5}-\d{4}/.test(telefone1)) {
     telefone1.classList.add('error');
     valid = false;
-    } else {
+  } else {
     telefone1.classList.remove('error');
   }
 
   // Validação do telefone 2
   var telefone2 = document.getElementById('telefone2');
-  if (telefone2.value && !/\(\d{2}\) \d{5}-\d{4}/.test(telefone2.value)) {
+  if (telefone2.value && !/\(\d{2}\) \d{5}-\d{4}/.test(telefone2)) {
     telefone2.classList.add('error');
     valid = false;
-    } else {
+  } else {
     telefone2.classList.remove('error');
   }
 
   // Validação do email
   var email = document.getElementById('email');
-  if (!/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(email.value)) {
+  if (!/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(email)) {
     email.classList.add('error');
     valid = false;
-    } else {
+  } else {
     email.classList.remove('error');
   }
 
   // Validação do CEP
   var cep = document.getElementById('cep');
-  if (!/^\d{5}-\d{3}$/.test(cep.value)) {
+  if (!/^\d{5}-\d{3}$/.test(cep)) {
     cep.classList.add('error');
     valid = false;
-    } else {
+  } else {
     cep.classList.remove('error');
+  }
+
+  // Validação do UF
+  var uf = document.getElementById('uf');
+  if (uf.value.trim() === '') {
+    uf.classList.add('error');
+    valid = false;
+  } else {
+    uf.classList.remove('error');
   }
 
   // Validação da cidade
   var cidade = document.getElementById('cidade');
-  if (!/^[A-Za-zÀ-ú\s]+$/.test(cidade.value)) {
+  if (!/^[A-Za-zÀ-ú\s]+$/.test(cidade)) {
     cidade.classList.add('error');
     valid = false;
-    } else {
+  } else {
     cidade.classList.remove('error');
   }
 
@@ -310,10 +315,10 @@ function ValidarFormulario() {
 
   // Validação do número da casa
   var numero = document.getElementById('numero');
-  if (!/^\d{1,5}$/.test(numero.value)) {
+  if (!/^\d{1,5}$/.test(numero)) {
     numero.classList.add('error');
     valid = false;
-    } else {
+  } else {
     numero.classList.remove('error');
   }
 
@@ -321,7 +326,7 @@ function ValidarFormulario() {
   if (valid) {
     alert('Cliente cadastrado com sucesso!');
     return true;
-    } else {
+  } else {
     return false;
   }
 }
