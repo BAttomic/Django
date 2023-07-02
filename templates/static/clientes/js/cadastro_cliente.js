@@ -1,5 +1,5 @@
-function PaginaAnterior() {
-  window.history.back();
+function RedirecionarPag(url) {
+  window.location.href = url;
 }
 
 // Função para formatar letras
@@ -46,37 +46,48 @@ function FormatarTELEFONE(input) {
 }
 
 // Função para verificar a existência de um CNPJ
-// Créditos: https://receitaws.com.br/api
+// Créditos: https://www.geradorcnpj.com/javascript-validar-cnpj.htm
 function ValidarCNPJ(cnpj) {
-  return new Promise((resolve, reject) => {
-    cnpj = cnpj.replace(/[^\d]+/g, ''); // Remove caracteres especiais
+  cnpj = cnpj.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
 
-    if (cnpj.length !== 14) {
-      resolve(false);
-      
-    } else {
-      var url = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`; // URL para fazer a requisição
+  if (cnpj.length !== 14) {
+    return false;
+  }
 
-      fetch(url) // Faz a requisição GET
-        .then(response => response.json())
-        .then(data => {
-          // Verifica se o CNPJ é válido
-          if (data.status === "OK") {
-          console.log("CNPJ valido")
-            resolve(true);
+  // Verifica se todos os dígitos são iguais (ex: 11111111111111)
+  if (/^(\d)\1+$/.test(cnpj)) {
+    return false;
+  }
 
-          } else {
-          console.log("CNPJ invalido")
-            resolve(false);
-          }
-          
-        })
-        .catch(error => {
-          console.error('Ocorreu um erro:', error);
-          resolve(false);
-        });
-    }
-  });
+  // Validação do primeiro dígito verificador
+  let soma = 0;
+  let peso = 2;
+
+  for (let i = 11; i >= 0; i--) {
+    soma += parseInt(cnpj.charAt(i)) * peso;
+    peso = (peso + 1) % 10 || 2;
+  }
+
+  let digitoVerificador = (soma % 11 < 2) ? 0 : 11 - (soma % 11);
+  if (parseInt(cnpj.charAt(12)) !== digitoVerificador) {
+    return false;
+  }
+
+  // Validação do segundo dígito verificador
+  soma = 0;
+  peso = 2;
+
+  for (let i = 12; i >= 0; i--) {
+    soma += parseInt(cnpj.charAt(i)) * peso;
+    peso = (peso + 1) % 10 || 2;
+  }
+
+  digitoVerificador = (soma % 11 < 2) ? 0 : 11 - (soma % 11);
+  if (parseInt(cnpj.charAt(13)) !== digitoVerificador) {
+    return false;
+  }
+
+  return true;
 }
 
 // Função para validar CPF (Não implica que é existente)
@@ -191,7 +202,7 @@ function ValidarFormulario() {
     var rg = document.getElementById('rg');
 
     // Validação do NOME
-    if (!/^[A-Za-zÀ-ú\s]+$/.test(nome)) {
+    if (!/^[A-Za-zÀ-ú\s]+$/.test(nome.value)) {
       nome.classList.add('error');
       valid = false;
     } else {
@@ -207,7 +218,7 @@ function ValidarFormulario() {
     }
 
     // Validação do RG
-    if (!/^\d{7,10}$/.test(rg)) {
+    if (!/^\d{7,10}$/.test(rg.value)) {
       rg.classList.add('error');
       valid = false;
     } else {
@@ -220,7 +231,7 @@ function ValidarFormulario() {
     var ie = document.getElementById('ie');
 
     // Validação da RAZÃO SOCIAL
-    if (!/^[A-Za-zÀ-ú\s]+$/.test(razaosocial)) {
+    if (!/^[A-Za-zÀ-ú\s]+$/.test(razaosocial.value)) {
       razaosocial.classList.add('error');
       valid = false;
     } else {
@@ -228,7 +239,7 @@ function ValidarFormulario() {
     }
 
     // Validação do CNPJ
-    if (ValidarCNPJ(cnpj)) {
+    if (!ValidarCNPJ(cnpj.value)) {
       cnpj.classList.add('error');
       valid = false;
     } else {
@@ -236,7 +247,7 @@ function ValidarFormulario() {
     }
 
     // Validação da INSCRIÇÃO ESTADUAL
-    if (!/^\d{2,14}$/.test(ie)) {
+    if (!/^\d{2,14}$/.test(ie.value)) {
       ie.classList.add('error');
       valid = false;
     } else {
@@ -246,7 +257,7 @@ function ValidarFormulario() {
 
   // Validação do telefone 1
   var telefone1 = document.getElementById('telefone1');
-  if (!/\(\d{2}\) \d{5}-\d{4}/.test(telefone1)) {
+  if (!/\(\d{2}\) \d{5}-\d{4}/.test(telefone1.value)) {
     telefone1.classList.add('error');
     valid = false;
   } else {
@@ -255,7 +266,7 @@ function ValidarFormulario() {
 
   // Validação do telefone 2
   var telefone2 = document.getElementById('telefone2');
-  if (telefone2.value && !/\(\d{2}\) \d{5}-\d{4}/.test(telefone2)) {
+  if (telefone2.value && !/\(\d{2}\) \d{5}-\d{4}/.test(telefone2.value)) {
     telefone2.classList.add('error');
     valid = false;
   } else {
@@ -264,7 +275,7 @@ function ValidarFormulario() {
 
   // Validação do email
   var email = document.getElementById('email');
-  if (!/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(email)) {
+  if (!/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(email.value)) {
     email.classList.add('error');
     valid = false;
   } else {
@@ -273,7 +284,7 @@ function ValidarFormulario() {
 
   // Validação do CEP
   var cep = document.getElementById('cep');
-  if (!/^\d{5}-\d{3}$/.test(cep)) {
+  if (!/^\d{5}-\d{3}$/.test(cep.value)) {
     cep.classList.add('error');
     valid = false;
   } else {
@@ -291,7 +302,7 @@ function ValidarFormulario() {
 
   // Validação da cidade
   var cidade = document.getElementById('cidade');
-  if (!/^[A-Za-zÀ-ú\s]+$/.test(cidade)) {
+  if (!/^[A-Za-zÀ-ú\s]+$/.test(cidade.value)) {
     cidade.classList.add('error');
     valid = false;
   } else {
@@ -318,7 +329,7 @@ function ValidarFormulario() {
 
   // Validação do número da casa
   var numero = document.getElementById('numero');
-  if (!/^\d{1,5}$/.test(numero)) {
+  if (!/^\d{1,5}$/.test(numero.value)) {
     numero.classList.add('error');
     valid = false;
   } else {

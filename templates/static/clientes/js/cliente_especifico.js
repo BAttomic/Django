@@ -1,3 +1,3 @@
-function PaginaAnterior() {
-  window.history.back();
+function RedirecionarPag(url) {
+  window.location.href = url;
 }

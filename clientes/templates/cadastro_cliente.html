@@ -20,7 +20,7 @@
     <h2>Formulário de Cadastro de Cliente</h2>
 
     <div>
-      <button class="button" onclick="PaginaAnterior()">Voltar</button>
+      <button class="button" onclick="RedirecionarPag('/clientes/lista_clientes/')">Voltar</button>
     </div>
     
     <form action="{% url 'cadastro_cliente' %}" method="POST" onsubmit="return ValidarFormulario()">{% csrf_token %}

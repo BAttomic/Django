@@ -1,5 +1,5 @@
-function PaginaAnterior() {
-  window.history.back();
+function RedirecionarPag(url) {
+  window.location.href = url;
 }
 
 // Função para realizar a pesquisa de clientes
