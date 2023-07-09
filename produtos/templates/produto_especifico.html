@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Dados do produto</title>
+  <!-- Link CSS e JS-->
+  <link rel="stylesheet" href="/static/produtos/css/cadastro_produto.css">
+  <script src="/static/produtos/js/cadastro_produto.js"></script>
+
+  <script> //Essas funções deveriam estar dentro do .js porém elas não funcionam adequadamente lá, então deixei aqui mesmo
+
+    // Função para detectar se o valor é CPF ou CNPJ
+    function detectarCPFouCNPJ(valor) {
+      var CPF_Regex = /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/;
+      var CNPJ_Regex = /^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$/;
+    
+      if (CPF_Regex.test(valor)) {
+        return "CPF";
+      } else if (CNPJ_Regex.test(valor)) {
+        return "CNPJ";
+      } else {
+        return "N/A";
+      }
+    }
+    
+    // Função para carregar os dados do produto
+    function carregarDadosproduto() {
+      var CPF_CNPJ_Element = document.getElementById("cpf");
+      var CPF_CNPJ = CPF_CNPJ_Element.innerText;
+      var tipoElement = document.getElementById("tipo");
+    
+      var tipo = detectarCPFouCNPJ(CPF_CNPJ);
+    
+      if (tipo === "CPF") {
+        document.getElementById("campos-pessoa-fisica").style.display = "block";
+        document.getElementById("campos-pessoa-juridica").style.display = "none";
+      } else if (tipo === "CNPJ") {
+        document.getElementById("campos-pessoa-fisica").style.display = "none";
+        document.getElementById("campos-pessoa-juridica").style.display = "block";
+      }
+    }
+    
+    // Chamada da função para carregar os dados do produto quando a página carregar
+    window.onload = function () {
+      carregarDadosproduto();
+    };
+
+  </script>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <h4>Início > produtos > {{NOME_RAZAO}}</h4>
+    <h2>Dados do produto</h2>
+    
+    <div>
+      <button class="button" onclick="RedirecionarPag('/produtos/lista_produtos/')">Voltar</button>
+    </div>
+    
+    <h3>Dados da Conta</h3>
+    <div class="data-section">
+      <p><strong>Código:</strong> <span id="codigo">{{ID}}</span></p>
+      <p><strong>Estado da Conta:</strong> <span id="estado">{{ESTADO_CONTA}}</span></p>
+      <p><strong>Data de Registro:</strong> <span id="outras-informacoes">{{DATA_REGISTRO}}</span></p>
+    </div>
+
+    <br>
+
+    <h3>Identificação</h3>
+    <div id="campos-pessoa-fisica" style="display: none;">
+      <div class="data-section">
+        <span id="tipo"></span></p>
+        <p><strong>Nome:</strong> <span id="nome-fisica">{{NOME_RAZAO}}</span></p>
+        <p><strong>Apelido:</strong> <span id="apelido-fisica">{{APELIDO_FANTASIA}}</span></p>
+        <p><strong>CPF:</strong> <span id="cpf">{{CPF_CNPJ}}</span></p>
+        <p><strong>RG:</strong> <span id="rg-fisica">{{RG_IE}}</span></p>
+      </div>
+    </div>
+    <div id="campos-pessoa-juridica" style="display: none;">
+      <div class="data-section">
+        <p><strong>Razão Social:</strong> <span id="nome-juridica">{{NOME_RAZAO}}</span></p>
+        <p><strong>Nome Fantasia:</strong> <span id="apelido-juridica">{{APELIDO_FANTASIA}}</span></p>
+        <p><strong>CNPJ:</strong> <span id="cnpj">{{CPF_CNPJ}}</span></p>
+        <p><strong>IE:</strong> <span id="ie-juridica">{{RG_IE}}</span></p>
+      </div>
+    </div>
+
+    <br>
+
+    <h3>Contato</h3>
+    <div class="data-section">
+      <p><strong>Telefone 1:</strong> <span id="telefone1">{{TELEFONE1}}</span></p>
+      <p><strong>Telefone 2:</strong> <span id="telefone2">{{TELEFONE2}}</span></p>
+      <p><strong>Email:</strong> <span id="email">{{EMAIL}}</span></p>
+    </div>
+
+    <br>
+
+    <h3>Endereço</h3>
+    <div class="data-section">
+      <p><strong>Local:</strong> <span id="completo">{{RUA}}, {{NUMERO}} - {{BAIRRO}}, {{CIDADE}} - {{UF}}, {{CEP}}</span></p>
+      <p><strong>Complemento:</strong> <span id="complemento">{{COMPLEMENTO}}</span></p>
+    </div>
+
+    <br>
+
+    <h3>Outras Informações</h3>
+    <div class="data-section">
+      <p><strong>Observações:</strong> <span id="outras-informacoes">{{OUTRAS_INFORMACOES}}</span></p>
+    </div>
+
+    <div>
+      <button class="button" onclick="bloquearproduto()">Bloquear produto</button>
+      <button class="button" onclick="editarproduto()">Editar produto</button>
+      <button class="button" onclick="abrirCrediario()">Crediário</button>
+    </div>
+  </div>
+</body>
+
+</html>

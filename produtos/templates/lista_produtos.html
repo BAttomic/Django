@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Página de produtos</title>
+  <!-- Link CSS e JS-->
+  <link rel="stylesheet" href="/static/produtos/css/lista_produtos.css">
+  <script src="/static/produtos/js/lista_produtos.js"></script>
+
+</head>
+
+<body>
+
+  <!-- Formulário para enviar o ID do produto selecionado -->
+  <form id="produto-form" action="{% url 'lista_produtos' %}" method="POST">{% csrf_token %}
+    <input type="hidden" id="produto-id" name="produto_id">
+  </form>
+
+  <div class="container">
+    <h4>Início &gt; produtos</h4>
+    <h2>Página de produtos</h2>
+    
+    <div>
+      <button class="button" onclick="RedirecionarPag('../../home/home')">Voltar</button>
+    </div>
+
+    <div> <!-- Barra de pesquisa e filtro -->
+      <input class="search-box" type="text" id="search-input" placeholder="Pesquisar produto..." onkeyup="Pesquisarproduto()">
+
+      <select class="filter-box" id="filter-select" onchange="Filtrarprodutos()">
+        <option value="todos">Todos</option>
+        <option value="ativo">Ativo</option>
+        <option value="inativo">Inativo</option>
+      </select>
+    </div>
+
+    <div class="treeview-container">
+      <table>
+        <thead> <!-- Cabeçalho da tabela -->
+          <tr>
+            <th>ID</th>
+            <th>Estado da Conta</th>
+            <th>Tipo</th>
+            <th>Nome Completo</th>
+            <th>Apelido</th>
+            <th>Telefone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+
+        <tbody> <!-- Dados da tabela -->
+          {% for row in data %}
+          <tr class="treeview-item" data-tipo="{{ row.tipo }}" onclick="highlightRow(event)" ondblclick="AbrirPaginaproduto(event)">
+            <td>{{ row.id }}</td>
+            <td>{{ row.TIPO }}</td>
+            <td>{{ row.ESTADO_CONTA }}</td>
+            <td>{{ row.NOME_RAZAO }}</td>
+            <td>{{ row.APELIDO_FANTASIA }}</td>
+            <td>{{ row.TELEFONE1 }}</td>
+            <td>{{ row.EMAIL }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <a class="button" href="">produtos em atraso</a>
+      <a class="button" href="/produtos/cadastro_produto">Cadastrar novo produto</a>
+    </div>
+  </div>
+</body>
+
+</html>

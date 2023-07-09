@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cadastro de Produtos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .tabs {
+      margin-bottom: 20px;
+    }
+
+    .tab-link {
+      background-color: #f1f1f1;
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .tab-link:hover {
+      background-color: #ddd;
+    }
+
+    .tab-link.active {
+      background-color: #ccc;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+    }
+
+    .form-columns {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .form-column {
+      flex: 1;
+      padding-right: 10px;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script>
+    function openTab(evt, tabName) {
+      var i, tabContent, tabLinks;
+      tabContent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabContent.length; i++) {
+        tabContent[i].style.display = "none";
+      }
+      tabLinks = document.getElementsByClassName("tab-link");
+      for (i = 0; i < tabLinks.length; i++) {
+        tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    function saveProduct() {
+      // Aqui você pode implementar a lógica para salvar os dados do produto
+      var productData = {};
+      var inputs = document.getElementsByTagName("input");
+      for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        productData[input.name] = input.value;
+      }
+      console.log(productData);
+      // Aqui você pode enviar os dados para um servidor, salvar em um banco de dados, etc.
+      // Neste exemplo, apenas mostramos os dados no console.
+    }
+  </script>
+</head>
+<body>
+  <h1>Cadastro de Produtos</h1>
+
+  <div class="tabs">
+    <button class="tab-link active" onclick="openTab(event, 'basic-data')">Dados Básicos</button>
+    <button class="tab-link" onclick="openTab(event, 'fiscal-data')">Dados Fiscais</button>
+    <button class="tab-link" onclick="openTab(event, 'pis-confins')">PIS/COFINS</button>
+    <button class="tab-link" onclick="openTab(event, 'costs')">Custos</button>
+  </div>
+
+  <div id="basic-data" class="tab-content" style="display: block;">
+    <h2>Dados Básicos</h2>
+    <div class="form-columns">
+      <div class="form-column">
+        <h3>|Código|</h3>
+        <div>
+          <label for="tipo-produto">Tipo:</label>
+          <select id="tipo-produto" name="tipo-produto">
+            <option value="00">00 - Mercadoria para Revenda</option>
+            <option value="01">01 - Matéria-Prima</option>
+            <option value="02">02 - Embalagem</option>
+            <option value="03">03 - Produto em Processo</option>
+            <option value="04">04 - Produto Acabado</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="situacao">Situação:</label>
+          <select id="situacao" name="situacao">
+            <option value="00">Disponível</option>
+            <option value="01">Indisponível</option>
+            <option value="02">Em Estoque</option>
+            <option value="03">Fora de Estoque</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="tipo-codigo">Tipo do Código:</label>
+          <select id="tipo-codigo" name="tipo-codigo">
+            <option value="NENHUM">NENHUM - Sem código de barras</option>
+            <option value="GTIN">GTIN - Global Trade Item Number</option>
+            <option value="ISBN">ISBN - International Standard Book Number</option>
+            <option value="EAN">EAN - European Article Number</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="codigo">Código:</label>
+          <input type="text" name="codigo" placeholder="Código especificado" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>|Identificação|</h3>
+        <div>
+          <label for="name">Nome do produto:</label>
+          <input type="text" name="name" />
+        </div>
+
+        <div>
+          <label for="description">Descrição do produto:</label>
+          <input type="text" name="description" />
+        </div>
+
+        <div>
+          <label for="observacao">Observação:</label>
+          <input type="text" name="observacao" />
+        </div>
+
+        <div>
+          <label for="fornecedor">Fornecedor:</label>
+          <select id="fornecedor" name="fornecedor">
+            <option value="00">Fornecedor 1</option>
+            <option value="01">Fornecedor 2</option>
+            <option value="02">Fornecedor 3</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="categoria">Categoria:</label>
+          <select id="categoria" name="categoria">
+            <option value="00">Papelaria</option>
+            <option value="01">Eletrônicos</option>
+            <option value="02">Alimentos</option>
+          </select>
+        </div>
+
+       <div>
+          <label for="grupo">Grupo:</label>
+          <select id="grupo" name="grupo">
+            <option value="00">Caderno</option>
+            <option value="01">Lápis</option>
+            <option value="02">Caneta</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="subgrupo">Subgrupo:</label>
+          <select id="subgrupo" name="subgrupo">
+            <option value="00">10 matérias</option>
+            <option value="01">20 matérias</option>
+            <option value="02">50 matérias</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>|Características|</h3>
+        <div>
+          <label for="cor">Cor / Tipo:</label>
+          <input type="text" name="cor" />
+        </div>
+        <div>
+          <label for="unidade-medida">Unidade de medida:</label>
+          <select id="unidade-medida" name="unidade">
+            <option value="UN">UN - Unidade</option>
+            <option value="PR">PR - Par</option>
+            <option value="DZ">DZ - Dúzia</option>
+            <option value="CX">CX - Caixa</option>
+            <option value="PC">PC - Peça</option>
+            <option value="KG">KG - Quilograma</option>
+            <option value="MT">MT - Metro</option>
+            <option value="LT">LT - Litro</option>
+            <option value="FD">FD - Fardo</option>
+            <option value="PT">PT - Pacote</option> 
+            <option value="GL">GL - Galão</option>
+            <option value="SC">SC - Saco</option>
+            <option value="BD">BD - Balde</option>
+            <option value="CP">CP - Cartela</option>
+            <option value="RL">RL - Rolo</option>
+            <option value="KT">KT - Kit</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="peso-bruto">Peso bruto:</label>
+          <input type="text" name="peso-bruto" />
+        </div>
+
+        <div>
+          <label for="peso-liquido">Peso líquido:</label>
+          <input type="text" name="peso-liquido" />
+        </div>
+
+        <div>
+          <label for="volume">Volume:</label>
+          <input type="text" name="volume" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>|Embalagem|</h3>
+        <div>
+          <label for="formato">Formato:</label>
+          <select id="formato" name="formato">
+            <option value="CX">Caixa</option>
+            <option value="PT">Pacote</option> 
+            <option value="EN">Envelope</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="comprimento">Comprimento:</label>
+          <input type="text" name="comprimento" />
+        </div>
+
+        <div>
+          <label for="largura">Largura:</label>
+          <input type="text" name="largura" />
+        </div>
+
+        <div>
+          <label for="altura">Altura:</label>
+          <input type="text" name="altura" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>|Armazenagem|</h3>
+        <div>
+          <label for="localidade">Localidade:</label>
+          <input type="text" name="localidade" />
+        </div>
+
+        <div>
+          <label for="modulo">Módulo:</label>
+          <input type="text" name="modulo" />
+        </div>
+
+        <div>
+          <label for="nivel">Nível:</label>
+          <input type="text" name="nivel" />
+        </div>
+
+        <div>
+          <label for="vao">Vão:</label>
+          <input type="text" name="vao" />
+        </div>
+
+        <div>
+          <label for="repositorio">Repositório:</label>
+          <input type="text" name="repositorio" />
+        </div>
+
+        <div>
+          <label for="enderecamento">Endereçamento:</label>
+          <input type="text" name="enderecamento" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="fiscal-data" class="tab-content">
+    <h2>Dados Fiscais</h2>
+    <div class="form-columns">
+      <div class="form-column">
+        <h3>|NCM|</h3>
+        <div>
+          <label for="codigo-ncm">Código NCM:</label>
+          <input type="text" name="codigo-ncm" />
+        </div>
+
+        <div>
+          <label for="ex-ncm">EX:</label>
+          <input type="text" name="ex-ncm" />
+        </div>
+
+        <h3>|ANP|</h3>
+        <div>
+          <label for="codigo-anp">Código ANP:</label>
+          <input type="text" name="codigo-anp" />
+        </div>
+      
+        <h3>|Tributação de Venda - NFE</h3>
+        <div>
+          <label for="csosn">CSOSN:</label>
+          <input type="text" name="csosn" />
+        </div>
+
+        <div>
+          <label for="aliquota-icms">Alíquota ICMS:</label>
+          <input type="text" name="aliquota-icms" />
+        </div>
+
+        <div>
+          <label for="bc">Redução BC (%):</label>
+          <input type="text" name="bc" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>|Substituição Tributária|</h3>
+        <div>
+          <label for="aliquota-icms-st">Alíquota ICMS ST:</label>
+          <input type="text" name="aliquota-icms-st" />
+        </div>
+
+        <div>
+          <label for="convenio-st">Convênio ST:</label>
+          <input type="text" name="convenio-st" />
+        </div>
+
+        <div>
+          <label for="mva">MVA:</label>
+          <input type="text" name="mva" />
+        </div>
+
+        <div>
+          <label for="mva2">MVA:</label>
+          <input type="text" name="mva2" />
+        </div>
+
+        <div>
+          <label for="cest">CEST:</label>
+          <input type="text" name="cest" />
+        </div>
+
+        <div>
+          <label for="valor-de-pauta">Valor de Pauta:</label>
+          <input type="text" name="valor-de-pauta" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>|IPI|</h3>
+        <div>
+          <label for="aliquota-ipi">Alíquota IPI:</label>
+          <input type="text" name="aliquota-ipi" />
+        </div>
+
+        <div>
+          <label for="codigo-enquadramento">Código de Enquadramento:</label>
+          <input type="text" name="codigo-enquadramento" />
+        </div>
+
+        <div>
+          <label for="classe-enq">Classe Enq:</label>
+          <select id="classe-enq" name="classe-enq">
+            <option value="0">0</option>
+            <option value="1">1</option> 
+            <option value="2">2</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="val-unid">Valor Unid:</label>
+          <input type="text" name="val-unid" />
+        </div>
+
+        <h3>|Tributação de Venda NFCe|</h3>
+        <div>
+          <label for="csosn-nfce">CSOSN:</label>
+          <input type="text" name="csosn-nfce" />
+        </div>
+
+        <h3>|Tributação de Venda ECF|</h3>
+        <div>
+          <label for="posicao-fiscal">Posição Fiscal:</label>
+          <select id="posicao-fiscal" name="posicao-fiscal">
+            <option value="0">0</option>
+            <option value="1">1</option> 
+            <option value="2">2</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="aliquota-icms-sel">Alíquota ICMS SEL:</label>
+          <select id="aliquota-icms-sel" name="aliquota-icms-sel">
+            <option value="0">0</option>
+            <option value="1">1</option> 
+            <option value="2">2</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>Tributação de Compra</h3>
+        <div>
+          <label for="cst">CST:</label>
+          <input type="text" name="cst" />
+        </div>
+
+        <div>
+          <label for="aliquota-icms-compra">Alíquota ICMS:</label>
+          <input type="text" name="aliquota-icms-compra" />
+        </div>
+
+        <div>
+          <label for="taxa-reducao">Taxa de Redução:</label>
+          <input type="text" name="taxa-reducao" />
+        </div>
+        
+        <div>
+          <label for="beneficio-icms">Benefício ICMS:</label>
+          <select id="beneficio-icms" name="beneficio-icms">
+            <option value="0">0</option>
+            <option value="1">1</option> 
+            <option value="2">2</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="aliquota-fcp">Alíquota FCP:</label>
+          <select id="aliquota-fcp" name="aliquota-fcp">
+            <option value="0">0</option>
+            <option value="1">1</option> 
+            <option value="2">2</option>
+          </select>
+        </div>
+
+        <h3>|Regime Especial|</h3>
+        <div>
+          <label for="reducao-credito">Redução de Crédito (%):</label>
+          <input type="text" name="reducao-credito" />
+        </div>
+
+        <div>
+          <label for="reducao-debito">Redução de Débito (%):</label>
+          <input type="text" name="reducao-debito" />
+        </div>
+
+        <div>
+          <label for="estorno-debito">Estorno de Déb:</label>
+          <input type="text" name="estorno-debito" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="pis-confins" class="tab-content">
+    <h2>PIS/COFINS</h2>
+    <div class="form-columns">
+      <div class="form-column">
+
+        <h3>|Tributação de Venda|</h3>
+        <div>
+          <label for="cst-pis">CST PIS:</label>
+          <input type="text" name="cst-pis" />
+        </div>
+
+        <div>
+          <label for="natureza">Natureza:</label>
+          <input type="text" name="natureza" />
+        </div>
+
+        <div>
+          <label for="volume-unid">Volume por Unid:</label>
+          <input type="text" name="volume-unid" />
+        </div>
+
+        <div>
+          <label for="aliquota-pis">Alíquota PIS:</label>
+          <input type="text" name="aliquota-pis" />
+        </div>
+
+        <div>
+          <label for="pauta-pis">Pauta PIS:</label>
+          <input type="text" name="pauta-pis" />
+        </div>
+
+        <div>
+          <label for="aliquota-cofins">Alíquota COFINS:</label>
+          <input type="text" name="aliquota-cofins" />
+        </div>
+
+        <div>
+          <label for="pauta-cofins">Pauta COFINS:</label>
+          <input type="text" name="pauta-cofins" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>|Tributação de Compra|</h3>
+
+        <div>
+          <label for="aliquota-pis-compra">Alíquota PIS:</label>
+          <input type="text" name="aliquota-pis-compra" />
+        </div>
+
+        <div>
+          <label for="pauta-pis-compra">Pauta PIS:</label>
+          <input type="text" name="pauta-pis-compra" />
+        </div>
+
+        <div>
+          <label for="aliquota-cofins-compra">Alíquota COFINS:</label>
+          <input type="text" name="aliquota-cofins-compra" />
+        </div>
+
+        <div>
+          <label for="pauta-cofins-compra">Pauta COFINS:</label>
+          <input type="text" name="pauta-cofins-compra" />
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div id="costs" class="tab-content">
+    <h2>Valores</h2>
+    <div class="form-columns">
+
+      <div class="form-column">
+        <h3>Comissão</h3>
+
+        <div>
+          <label for="comissao">Comissão (%):</label>
+          <input type="text" name="comissao" />
+        </div>
+
+        <h3>|Desconto Máximo|</h3>
+
+        <div>
+          <label for="desconto-maximo">Desconto Máximo (%):</label>
+          <input type="text" name="desconto-maximo" />
+        </div>
+
+        <h3>Classificação ABC</h3>
+
+        <div>
+          <label for="abc-lucratividade">ABC por Lucratividade:</label>
+          <input type="text" name="abc-lucratividade" />
+        </div>
+
+        <div>
+          <label for="abc-venda">ABC por Quantidade de Venda:</label>
+          <input type="text" name="abc-venda" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>Formação do Preço de Venda</h3>
+
+        <div>
+          <label for="aliquota-simples">Alíquota Simples:</label>
+          <input type="text" name="aliquota-simples" />
+        </div>
+
+        <div>
+          <label for="despesas-operacionais">Despesas Operacionais:</label>
+          <input type="text" name="despesas-operacionais" />
+        </div>
+
+        <div>
+          <label for="margem-reajuste-padrao">Margem Reajuste Padrão:</label>
+          <input type="text" name="margem-reajuste-padrao" />
+        </div>
+
+        <div>
+          <label for="margem-lucro-bruto">Margem Lucro Bruto:</label>
+          <input type="text" name="margem-lucro-bruto" />
+        </div>
+
+        <div>
+          <label for="margem-lucro-liquido">Margem Lucro Líquido:</label>
+          <input type="text" name="margem-lucro-liquido" />
+        </div>
+
+        <div>
+          <label for="margem-reajuste-atual">Margem Reajuste Atual:</label>
+          <input type="text" name="margem-reajuste-atual" />
+        </div>
+      </div>
+
+      <div class="form-column">
+        <h3>Preço</h3>
+
+        <div>
+          <label for="preco=compra">Preço de Compra:</label>
+          <input type="text" name="preco-compra" />
+        </div>
+
+        <div>
+          <label for="preco-custo">Preço de Custo:</label>
+          <input type="text" name="preco-custo" />
+        </div>
+
+        <div>
+          <label for="preco-custo-medio">Preço de Custo Médio:</label>
+          <input type="text" name="preco-custo-medio" />
+        </div>
+
+        <div>
+          <label for="preco-custo-liquido">Preço de Custo Líquido:</label>
+          <input type="text" name="preco-custo-liquido" />
+        </div>
+
+        <div>
+          <label for="preco-venda-varejo">Preço de Venda Varejo:</label>
+          <input type="text" name="preco-venda-varejo" />
+        </div>
+
+        <div>
+          <label for="ultimo-reajuste-varejo">Último Reajuste Varejo:</label>
+          <input type="text" name="ultimo-reajuste-varejo" />
+        </div>
+
+        <div>
+          <label for="preco-venda-atacado">Preço de Venda Atacado:</label>
+          <input type="text" name="preco-venda-atacado" />
+        </div>
+
+        <div>
+          <label for="ultimo-reajuste-atacado">Último Reajuste Atacado:</label>
+          <input type="text" name="ultimo-reajuste-atacado" />
+        </div>
+
+      </div>
+
+      <div class="form-column">
+        <h3>Dados Adicionais</h3>
+
+        <div>
+          <label for="ultima-compra">Última Compra:</label>
+          <input type="text" name="ultima-compra" />
+        </div>
+        
+        <div>
+          <label for="ultimo-preco-compra">Último Preço de Compra:</label>
+          <input type="text" name="ultimo-preco-compra" />
+        </div>
+
+        <div>
+          <label for="sem-estoque-desde">Sem Estoque Desde:</label>
+          <input type="text" name="sem-estoque-desde" />
+        </div>
+
+        <div>
+          <label for="data-cadastro">Data de Cadastro:</label>
+          <input type="text" name="data-cadastro" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <button onclick="saveProduct()">Salvar Produto</button>
+
+</body>
+</html>

@@ -75,6 +75,11 @@ def cadastro_cliente(request):
             return HttpResponse("Erro! Cliente já cadastrado")
         
         else:
-            ClienteData=Cliente(TIPO=TIPO, NOME_RAZAO=NOME_RAZAO, APELIDO_FANTASIA=APELIDO_FANTASIA, CPF_CNPJ=CPF_CNPJ, RG_IE=RG_IE, TELEFONE1=TELEFONE1, TELEFONE2=TELEFONE2, EMAIL=EMAIL, UF=UF, CIDADE=CIDADE, BAIRRO=BAIRRO, RUA= RUA, NUMERO=NUMERO, COMPLEMENTO=COMPLEMENTO, CEP=CEP, OUTRAS_INFORMACOES=OUTRAS_INFORMACOES)
+            ClienteData=Cliente(TIPO=TIPO,                  NOME_RAZAO=NOME_RAZAO,              APELIDO_FANTASIA=APELIDO_FANTASIA,
+                                CPF_CNPJ=CPF_CNPJ,          RG_IE=RG_IE,                        TELEFONE1=TELEFONE1,
+                                TELEFONE2=TELEFONE2,        EMAIL=EMAIL,                        UF=UF,
+                                CIDADE=CIDADE,              BAIRRO=BAIRRO,                      RUA= RUA,
+                                NUMERO=NUMERO,              COMPLEMENTO=COMPLEMENTO,            CEP=CEP,
+                                OUTRAS_INFORMACOES=OUTRAS_INFORMACOES)
             ClienteData.save()
             return render(request, 'home.html')
