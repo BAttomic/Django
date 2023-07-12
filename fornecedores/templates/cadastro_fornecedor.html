@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!-- Settings -->
+  <meta charset="UTF-8">
+  <title>Formulário de Cadastro de  cedor</title>
+  <!-- Link CSS -->
+  <link rel="stylesheet" href="/static/fornecedores/css/cadastro_fornecedor.css">
+  <!-- Link JS-->
+  <script src="/static/fornecedores/js/cadastro_fornecedor.js"></script>
+
+</head>
+
+<body>
+
+  <div class="form-container">
+    <h4>Início > Fornecedores > Cadastrar novo fornecedor</h4>
+    <h2>Formulário de Cadastro de Fornecedor</h2>
+
+    <div>
+      <button class="button" onclick="RedirecionarPag('/fornecedores/lista_fornecedores/')">Voltar</button>
+    </div>
+    
+    <form action="{% url 'cadastro_fornecedor' %}" method="POST" onsubmit="return ValidarFormulario()">{% csrf_token %}
+
+      <h3>Identificação</h3>
+
+      <div class="form-field">
+        <label for="tipo-pessoa">Fornecedor:</label>
+        <select id="tipo-pessoa" name="tipo-pessoa" onchange="MostrarCampos(this.value)">
+          <option value="" disabled selected>Selecione o tipo...</option>
+          <option value="pessoa-fisica">Pessoa Física</option>
+          <option value="pessoa-juridica">Pessoa Jurídica</option>
+        </select>
+      </div>
+
+      <div id="campos-pessoa-fisica" style="display: none;">
+        <div class="form-field">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" pattern="[A-Za-zÀ-ú\s]+" oninput="FormatarLETRAS(this)">
+        </div>
+
+        <div class="form-field">
+          <label for="apelido">Apelido:</label>
+          <input type="text" id="apelido" name="apelido" pattern="[A-Za-zÀ-ú\s]+">
+        </div>
+
+        <div class="form-field">
+          <label for="cpf">CPF:</label>
+          <input type="text" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" maxlength="14" oninput="FormatarCPF(this)">
+        </div>
+
+        <div class="form-field">
+          <label for="rg">RG:</label>
+          <input type="text" id="rg" name="rg" pattern="\d{7,10}" maxlength="10" oninput="FormatarNUMEROS(this)">
+        </div>
+      </div>
+
+      <div id="campos-pessoa-juridica" style="display: none;">
+        <div class="form-field">
+          <label for="razaosocial">Razão Social:</label>
+          <input type="text" id="razaosocial" name="razaosocial" pattern="[a-zA-ZÀ-ÿ0-9\s]+">
+        </div>
+
+        <div class="form-field">
+          <label for="nomefantasia">Nome Fantasia:</label>
+          <input type="text" id="nomefantasia" name="nomefantasia" pattern="[a-zA-ZÀ-ÿ0-9\s]+">
+        </div>
+
+        <div class="form-field">
+          <label for="cnpj">CNPJ:</label>
+          <input type="text" id="cnpj" name="cnpj" pattern="\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}" maxlength="18" oninput="FormatarCNPJ(this)">
+        </div>
+
+        <div class="form-field">
+          <label for="ie">IE:</label>
+          <input type="text" id="ie" name="ie" pattern="\d{2,14}" maxlength="14" oninput="FormatarNUMEROS(this)">
+        </div>
+      </div>
+
+      <h3>Contato</h3>
+
+      <div class="form-field">
+        <label for="telefone1">Telefone 1:</label>
+        <input type="text" id="telefone1" name="telefone1" pattern="\(\d{2}\) \d{5}-\d{4}" oninput="FormatarTELEFONE(this)" maxlength="15">
+      </div>
+
+      <div class="form-field">
+        <label for="telefone2">Telefone 2:</label>
+        <input type="text" id="telefone2" name="telefone2" pattern="\(\d{2}\) \d{5}-\d{4}" oninput="FormatarTELEFONE(this)" maxlength="15">
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
+      </div>
+
+      <h3>Endereço</h3>
+
+      <div class="form-field">
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" name="cep" pattern="\d{5}-\d{3}" maxlength="9" oninput="FormatarCEP(this)">
+      </div>
+
+      <div class="form-field">
+        <label for="uf">UF:</label>
+        <select id="uf" name="uf">
+          <option value="" disabled selected>Selecione o estado...</option>
+          <option value="AC">Acre</option>
+          <option value="AL">Alagoas</option>
+          <option value="AP">Amapá</option>
+          <option value="AM">Amazonas</option>
+          <option value="BA">Bahia</option>
+          <option value="CE">Ceará</option>
+          <option value="DF">Distrito Federal</option>
+          <option value="ES">Espírito Santo</option>
+          <option value="GO">Goiás</option>
+          <option value="MA">Maranhão</option>
+          <option value="MT">Mato Grosso</option>
+          <option value="MS">Mato Grosso do Sul</option>
+          <option value="MG">Minas Gerais</option>
+          <option value="PA">Pará</option>
+          <option value="PB">Paraíba</option>
+          <option value="PR">Paraná</option>
+          <option value="PE">Pernambuco</option>
+          <option value="PI">Piauí</option>
+          <option value="RJ">Rio de Janeiro</option>
+          <option value="RN">Rio Grande do Norte</option>
+          <option value="RS">Rio Grande do Sul</option>
+          <option value="RO">Rondônia</option>
+          <option value="RR">Roraima</option>
+          <option value="SC">Santa Catarina</option>
+          <option value="SP">São Paulo</option>
+          <option value="SE">Sergipe</option>
+          <option value="TO">Tocantins</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" name="cidade" pattern="[A-Za-zÀ-ú\s]+" oninput="FormatarLETRAS(this)">
+      </div>
+
+      <div class="form-field">
+        <label for="bairro">Bairro:</label>
+        <input type="text" id="bairro" name="bairro">
+      </div>
+
+      <div class="form-field">
+        <label for="rua">Rua:</label>
+        <input type="text" id="rua" name="rua">
+      </div>
+
+      <div class="form-field">
+        <label for="numero">Número:</label>
+        <input type="text" id="numero" name="numero" pattern="\d{1,5}" maxlength="5" oninput="FormatarNUMEROS(this)">
+      </div>
+
+      <div class="form-field">
+        <label for="complemento">Complemento:</label>
+        <input type="text" id="complemento" name="complemento">
+      </div>
+
+      <h3>Outras Informações</h3>
+
+      <div class="form-field">
+        <label for="outras-informacoes">Outras informações:</label>
+        <input type="text" id="outras-informacoes" name="outras-informacoes"></input>
+      </div>
+
+      <div class="form-field">
+        <input type="submit" value="Enviar">
+      </div>
+      
+    </form>
+
+  </div>
+</body>
+
+</html>

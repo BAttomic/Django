@@ -41,12 +41,6 @@
         <thead> <!-- Cabeçalho da tabela -->
           <tr>
             <th>ID</th>
-            <th>Estado da Conta</th>
-            <th>Tipo</th>
-            <th>Nome Completo</th>
-            <th>Apelido</th>
-            <th>Telefone</th>
-            <th>Email</th>
           </tr>
         </thead>
 
@@ -54,12 +48,6 @@
           {% for row in data %}
           <tr class="treeview-item" data-tipo="{{ row.tipo }}" onclick="highlightRow(event)" ondblclick="AbrirPaginaproduto(event)">
             <td>{{ row.id }}</td>
-            <td>{{ row.TIPO }}</td>
-            <td>{{ row.ESTADO_CONTA }}</td>
-            <td>{{ row.NOME_RAZAO }}</td>
-            <td>{{ row.APELIDO_FANTASIA }}</td>
-            <td>{{ row.TELEFONE1 }}</td>
-            <td>{{ row.EMAIL }}</td>
           </tr>
           {% endfor %}
         </tbody>
