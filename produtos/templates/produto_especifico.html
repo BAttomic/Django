@@ -9,46 +9,6 @@
   <link rel="stylesheet" href="/static/produtos/css/cadastro_produto.css">
   <script src="/static/produtos/js/cadastro_produto.js"></script>
 
-  <script> //Essas funções deveriam estar dentro do .js porém elas não funcionam adequadamente lá, então deixei aqui mesmo
-
-    // Função para detectar se o valor é CPF ou CNPJ
-    function detectarCPFouCNPJ(valor) {
-      var CPF_Regex = /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/;
-      var CNPJ_Regex = /^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$/;
-    
-      if (CPF_Regex.test(valor)) {
-        return "CPF";
-      } else if (CNPJ_Regex.test(valor)) {
-        return "CNPJ";
-      } else {
-        return "N/A";
-      }
-    }
-    
-    // Função para carregar os dados do produto
-    function carregarDadosproduto() {
-      var CPF_CNPJ_Element = document.getElementById("cpf");
-      var CPF_CNPJ = CPF_CNPJ_Element.innerText;
-      var tipoElement = document.getElementById("tipo");
-    
-      var tipo = detectarCPFouCNPJ(CPF_CNPJ);
-    
-      if (tipo === "CPF") {
-        document.getElementById("campos-pessoa-fisica").style.display = "block";
-        document.getElementById("campos-pessoa-juridica").style.display = "none";
-      } else if (tipo === "CNPJ") {
-        document.getElementById("campos-pessoa-fisica").style.display = "none";
-        document.getElementById("campos-pessoa-juridica").style.display = "block";
-      }
-    }
-    
-    // Chamada da função para carregar os dados do produto quando a página carregar
-    window.onload = function () {
-      carregarDadosproduto();
-    };
-
-  </script>
-
 </head>
 
 <body>

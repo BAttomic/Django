@@ -22,7 +22,7 @@ def fornecedor_especifico(request, ID):
         ID=int(ID)
 
         return render(request, './fornecedor_especifico.html', {  
-            'ID': FornecedorData[ID].id,                                   'ESTADO_CONTA': FornecedorData[ID].ESTADO_CONTA,
+            'ID': FornecedorData[ID].id,
             'NOME_RAZAO':FornecedorData[ID].NOME_RAZAO,                    'APELIDO_FANTASIA': FornecedorData[ID].APELIDO_FANTASIA,
             'CPF_CNPJ': FornecedorData[ID].CPF_CNPJ,                       'RG_IE': FornecedorData[ID].RG_IE,
             'TELEFONE1': FornecedorData[ID].TELEFONE1,                     'TELEFONE2': FornecedorData[ID].TELEFONE2,
@@ -75,11 +75,11 @@ def cadastro_fornecedor(request):
             return HttpResponse("Erro! Fornecedor já cadastrado")
         
         else:
-            FornecedorData=Fornecedor(TIPO=TIPO,                  NOME_RAZAO=NOME_RAZAO,              APELIDO_FANTASIA=APELIDO_FANTASIA,
-                                CPF_CNPJ=CPF_CNPJ,          RG_IE=RG_IE,                        TELEFONE1=TELEFONE1,
-                                TELEFONE2=TELEFONE2,        EMAIL=EMAIL,                        UF=UF,
-                                CIDADE=CIDADE,              BAIRRO=BAIRRO,                      RUA= RUA,
-                                NUMERO=NUMERO,              COMPLEMENTO=COMPLEMENTO,            CEP=CEP,
-                                OUTRAS_INFORMACOES=OUTRAS_INFORMACOES)
+            FornecedorData=Fornecedor(  TIPO=TIPO,                  NOME_RAZAO=NOME_RAZAO,              APELIDO_FANTASIA=APELIDO_FANTASIA,
+                                        CPF_CNPJ=CPF_CNPJ,          RG_IE=RG_IE,                        TELEFONE1=TELEFONE1,
+                                        TELEFONE2=TELEFONE2,        EMAIL=EMAIL,                        UF=UF,
+                                        CIDADE=CIDADE,              BAIRRO=BAIRRO,                      RUA= RUA,
+                                        NUMERO=NUMERO,              COMPLEMENTO=COMPLEMENTO,            CEP=CEP,
+                                        OUTRAS_INFORMACOES=OUTRAS_INFORMACOES)
             FornecedorData.save()
             return render(request, 'home.html')

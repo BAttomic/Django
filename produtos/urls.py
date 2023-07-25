@@ -5,4 +5,5 @@ urlpatterns = [
     path('cadastro_produto/', views.cadastro_produto, name="cadastro_produto"),
     path('lista_produtos/', views.lista_produtos, name='lista_produtos'),
     path('produto_especifico/', views.produto_especifico, name='produto_especifico'),
+    path('cadastro_categorias/', views.cadastro_categorias, name='cadastro_categorias'),
 ]

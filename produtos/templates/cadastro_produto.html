@@ -1,118 +1,22 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+  
+  <meta charset="UTF-8">
   <title>Cadastro de Produtos</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    .tabs {
-      margin-bottom: 20px;
-    }
-
-    .tab-link {
-      background-color: #f1f1f1;
-      border: none;
-      color: #000;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    .tab-link:hover {
-      background-color: #ddd;
-    }
-
-    .tab-link.active {
-      background-color: #ccc;
-    }
-
-    .tab-content {
-      display: none;
-      padding: 20px;
-      border: 1px solid #ccc;
-      background-color: #fff;
-    }
-
-    .form-columns {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .form-column {
-      flex: 1;
-      padding-right: 10px;
-    }
-
-    input[type="text"],
-    select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
-  <script>
-    function openTab(evt, tabName) {
-      var i, tabContent, tabLinks;
-      tabContent = document.getElementsByClassName("tab-content");
-      for (i = 0; i < tabContent.length; i++) {
-        tabContent[i].style.display = "none";
-      }
-      tabLinks = document.getElementsByClassName("tab-link");
-      for (i = 0; i < tabLinks.length; i++) {
-        tabLinks[i].className = tabLinks[i].className.replace(" active", "");
-      }
-      document.getElementById(tabName).style.display = "block";
-      evt.currentTarget.className += " active";
-    }
-
-    function saveProduct() {
-      // Aqui você pode implementar a lógica para salvar os dados do produto
-      var productData = {};
-      var inputs = document.getElementsByTagName("input");
-      for (var i = 0; i < inputs.length; i++) {
-        var input = inputs[i];
-        productData[input.name] = input.value;
-      }
-      console.log(productData);
-      // Aqui você pode enviar os dados para um servidor, salvar em um banco de dados, etc.
-      // Neste exemplo, apenas mostramos os dados no console.
-    }
-  </script>
+  <!-- Link CSS e JS-->
+  <link rel="stylesheet" href="/static/produtos/css/cadastro_produto.css">
+  <script src="/static/produtos/js/cadastro_produto.js"></script>
+  
 </head>
+
 <body>
   <h1>Cadastro de Produtos</h1>
+  
+  <div>
+    <button class="button" onclick="RedirecionarPag('/produtos/lista_produtos/')">Voltar</button>
+  </div>
 
   <div class="tabs">
     <button class="tab-link active" onclick="openTab(event, 'basic-data')">Dados Básicos</button>
@@ -153,7 +57,8 @@
             <option value="NENHUM">NENHUM - Sem código de barras</option>
             <option value="GTIN">GTIN - Global Trade Item Number</option>
             <option value="ISBN">ISBN - International Standard Book Number</option>
-            <option value="EAN">EAN - European Article Number</option>
+            <option value="EAN">EAN-8 - European Article Number</option>
+            <option value="EAN">EAN-13 - European Article Number</option>
           </select>
         </div>
 
@@ -183,36 +88,59 @@
         <div>
           <label for="fornecedor">Fornecedor:</label>
           <select id="fornecedor" name="fornecedor">
-            <option value="00">Fornecedor 1</option>
-            <option value="01">Fornecedor 2</option>
-            <option value="02">Fornecedor 3</option>
+            {% if data_fornecedores %}
+              <option value="" disabled selected>Escolha um fornecedor</option>
+              {% for row in data_fornecedores %}
+                <option value="{{ forloop.counter0 }}">{{ row.NOME_RAZAO }}</option>
+              {% endfor %}
+            {% else %}
+              <option value="none">Nenhum fornecedor.</option>
+            {% endif %}
           </select>
         </div>
 
         <div>
           <label for="categoria">Categoria:</label>
           <select id="categoria" name="categoria">
-            <option value="00">Papelaria</option>
-            <option value="01">Eletrônicos</option>
-            <option value="02">Alimentos</option>
+            {% if data_categorias %}
+              <option value="" disabled selected>Escolha uma categoria</option>
+              {% for row in data_categorias %}
+                <option value="{{ forloop.counter0 }}">{{ row.nome }}</option>
+              {% endfor %}
+              <option value="none">Nenhuma categoria</option>
+            {% else %}
+              <option value="none">Nenhuma categoria existente!</option>
+            {% endif %}
           </select>
         </div>
 
        <div>
           <label for="grupo">Grupo:</label>
           <select id="grupo" name="grupo">
-            <option value="00">Caderno</option>
-            <option value="01">Lápis</option>
-            <option value="02">Caneta</option>
+            {% if data_grupos %}
+              <option value="" disabled selected>Escolha um grupo</option>
+              {% for row in data_grupos %}
+                <option value="{{ forloop.counter0 }}">{{ row.nome }}</option>
+              {% endfor %}
+              <option value="none">Nenhum grupo</option>
+            {% else %}
+              <option value="none">Nenhum grupo existente!</option>
+            {% endif %}
           </select>
         </div>
 
         <div>
           <label for="subgrupo">Subgrupo:</label>
           <select id="subgrupo" name="subgrupo">
-            <option value="00">10 matérias</option>
-            <option value="01">20 matérias</option>
-            <option value="02">50 matérias</option>
+            {% if data_subgrupos %}
+              <option value="" disabled selected>Escolha um grupo</option>
+              {% for row in data_subgrupos %}
+                <option value="{{ forloop.counter0 }}">{{ row.nome }}</option>
+              {% endfor %}
+              <option value="none">Nenhum grupo</option>
+            {% else %}
+              <option value="none">Nenhum grupo existente!</option>
+            {% endif %}
           </select>
         </div>
       </div>
@@ -325,6 +253,7 @@
 
   <div id="fiscal-data" class="tab-content">
     <h2>Dados Fiscais</h2>
+
     <div class="form-columns">
       <div class="form-column">
         <h3>|NCM|</h3>

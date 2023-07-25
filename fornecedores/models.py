@@ -1,7 +1,6 @@
 from django.db import models
 
 class Fornecedor(models.Model):
-    ESTADO_CONTA = 'ATIVO'
     TIPO = models.CharField(max_length=4)
     NOME_RAZAO = models.CharField(max_length=100)
     APELIDO_FANTASIA = models.CharField(max_length=50)

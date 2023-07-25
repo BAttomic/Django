@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Formulário de Categorias, Grupos e Sub-grupos</title>
+  <!-- Link CSS e JS-->
+  <link rel="stylesheet" href="/static/produtos/css/cadastro_categorias.css">
+  <script src="/static/produtos/js/cadastro_categorias.js"></script>
+  
+</head>
+
+<body>
+    <h2>Formulário de Categorias, Grupos e Sub-grupos</h2>
+  
+    <div>
+        <button class="button" onclick="RedirecionarPag('../../home/home')">Voltar</button>
+    </div>
+
+    <form  action="{% url 'cadastro_categorias' %}" method="POST">{% csrf_token %}
+        <label for="categoria">Categoria:</label>
+        <input type="text" id="categoria" name="categoria" required>
+        <button type="button" onclick="adicionarCategoria()">Adicionar Categoria</button>
+    
+        <label for="grupo">Grupo:</label>
+        <select id="grupoSelect" required disabled>
+            <option value="" disabled selected>Selecione uma Categoria</option>
+        </select>
+        <input type="text" id="grupo" name="grupo" required disabled>
+        <button type="button" onclick="adicionarGrupo()" id="addGrupo" disabled>Adicionar Grupo</button>
+    
+        <label for="subgrupo">Sub-grupo:</label>
+        <select id="subgrupoSelect" required disabled>
+            <option value="" disabled selected>Selecione um Grupo</option>
+        </select>
+        <input type="text" id="subgrupo" name="subgrupo" required disabled>
+        <button type="button" onclick="adicionarSubgrupo()" id="addSubgrupo" disabled>Adicionar Sub-grupo</button>
+        
+        <button type="submit">Salvar</button>
+    </form>
+
+    <div id="output">
+        <h3>Categorias:</h3>
+        <ul id="listaCategorias">
+            {% for categoria in categorias %}
+                <li>
+                    <strong>Categoria:</strong> {{ categoria.nome }}
+                    <ul>
+                        {% for grupo in categoria.grupo_set.all %}
+                            <li>
+                                <strong>Grupo:</strong> {{ grupo.nome }}
+                                {% if grupo.subgrupo_set.all %}
+                                    <ul>
+                                        {% for subgrupo in grupo.subgrupo_set.all %}
+                                            <li><strong>Sub-grupo:</strong> {{ subgrupo.nome }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+</body>
+</html>
